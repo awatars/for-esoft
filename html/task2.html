@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../css/task2.css" />
+    <title>Задание 2 — Глубокое копирование объекта</title>
+  </head>
+  <body>
+    <a href="index.html" class="back-link">← На главную</a>
+
+    <div class="container">
+      <h1>Задание 2: Глубокое копирование объекта</h1>
+      <p class="description">
+        Функция <code>deepClone</code> выполняет глубокое копирование объекта с
+        поддержкой<br />
+        вложенных структур, циклических ссылок, Date, Map, Set, RegExp, функций,
+        символов и прототипов.
+      </p>
+
+      <div class="code-block">
+        <span class="lang-label">JavaScript</span>
+        <pre>
+<span class="comment">/**
+ * Глубокое копирование объекта.
+ *
+ * Поддерживает: Object, Array, Date, RegExp, Map, Set,
+ * функции, символьные ключи, циклические ссылки, прототипы.
+ *
+ * @param {*} source — исходное значение
+ * @param {WeakMap} [seen] — карта уже скопированных объектов (для циклов)
+ * @returns {*} глубокая копия
+ */</span>
+<span class="keyword">function</span> <span class="function">deepClone</span>(source, seen = <span class="keyword">new</span> <span class="const">WeakMap</span>()) {
+
+    <span class="comment">// 1. Примитивы и null — возвращаем как есть</span>
+    <span class="keyword">if</span> (source === <span class="const">null</span> || <span class="keyword">typeof</span> source !== <span class="string">'object'</span> &amp;&amp; <span class="keyword">typeof</span> source !== <span class="string">'function'</span>) {
+        <span class="keyword">return</span> source;
+    }
+
+    <span class="comment">// 2. Функции — копируем, привязывая к тому же контексту</span>
+    <span class="keyword">if</span> (<span class="keyword">typeof</span> source === <span class="string">'function'</span>) {
+        <span class="keyword">const</span> clonedFn = source.bind({});
+        <span class="const">Object</span>.<span class="function">defineProperties</span>(clonedFn,
+            <span class="const">Object</span>.<span class="function">getOwnPropertyDescriptors</span>(source)
+        );
+        <span class="keyword">return</span> clonedFn;
+    }
+
+    <span class="comment">// 3. Проверка циклических ссылок</span>
+    <span class="keyword">if</span> (seen.<span class="function">has</span>(source)) {
+        <span class="keyword">return</span> seen.<span class="function">get</span>(source);
+    }
+
+    <span class="comment">// 4. Date</span>
+    <span class="keyword">if</span> (source <span class="keyword">instanceof</span> <span class="const">Date</span>) {
+        <span class="keyword">return new</span> <span class="const">Date</span>(source.<span class="function">getTime</span>());
+    }
+
+    <span class="comment">// 5. RegExp</span>
+    <span class="keyword">if</span> (source <span class="keyword">instanceof</span> <span class="const">RegExp</span>) {
+        <span class="keyword">return new</span> <span class="const">RegExp</span>(source.source, source.flags);
+    }
+
+    <span class="comment">// 6. Map</span>
+    <span class="keyword">if</span> (source <span class="keyword">instanceof</span> <span class="const">Map</span>) {
+        <span class="keyword">const</span> mapCopy = <span class="keyword">new</span> <span class="const">Map</span>();
+        seen.<span class="function">set</span>(source, mapCopy);
+        source.<span class="function">forEach</span>((val, key) =&gt; {
+            mapCopy.<span class="function">set</span>(<span class="function">deepClone</span>(key, seen), <span class="function">deepClone</span>(val, seen));
+        });
+        <span class="keyword">return</span> mapCopy;
+    }
+
+    <span class="comment">// 7. Set</span>
+    <span class="keyword">if</span> (source <span class="keyword">instanceof</span> <span class="const">Set</span>) {
+        <span class="keyword">const</span> setCopy = <span class="keyword">new</span> <span class="const">Set</span>();
+        seen.<span class="function">set</span>(source, setCopy);
+        source.<span class="function">forEach</span>((val) =&gt; {
+            setCopy.<span class="function">add</span>(<span class="function">deepClone</span>(val, seen));
+        });
+        <span class="keyword">return</span> setCopy;
+    }
+
+    <span class="comment">// 8. Array и Object — сохраняем прототип</span>
+    <span class="keyword">const</span> proto = <span class="const">Object</span>.<span class="function">getPrototypeOf</span>(source);
+    <span class="keyword">const</span> clone = <span class="const">Array</span>.<span class="function">isArray</span>(source)
+        ? []
+        : <span class="const">Object</span>.<span class="function">create</span>(proto);
+
+    seen.<span class="function">set</span>(source, clone);
+
+    <span class="comment">// 9. Копируем все собственные свойства (включая символьные)</span>
+    <span class="keyword">const</span> keys = [
+        ...<span class="const">Object</span>.<span class="function">getOwnPropertyNames</span>(source),
+        ...<span class="const">Object</span>.<span class="function">getOwnPropertySymbols</span>(source)
+    ];
+
+    <span class="keyword">for</span> (<span class="keyword">const</span> key <span class="keyword">of</span> keys) {
+        <span class="keyword">const</span> descriptor = <span class="const">Object</span>.<span class="function">getOwnPropertyDescriptor</span>(source, key);
+        <span class="keyword">if</span> (descriptor.value !== <span class="const">undefined</span>) {
+            descriptor.value = <span class="function">deepClone</span>(descriptor.value, seen);
+        }
+        <span class="const">Object</span>.<span class="function">defineProperty</span>(clone, key, descriptor);
+    }
+
+    <span class="keyword">return</span> clone;
+}
+</pre>
+      </div>
+
+      <h2>Тестирование</h2>
+      <button id="run-tests">▶ Запустить тесты</button>
+
+      <div class="test-section">
+        <div id="test-output">Нажмите кнопку, чтобы запустить тесты…</div>
+      </div>
+    </div>
+    <script src="../js/task2.js"></script>
+  </body>
+</html>
