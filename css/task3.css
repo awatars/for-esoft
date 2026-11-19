@@ -1,271 +1,270 @@
+/* task3.css
+   Bracket checker page. Same light base as task2, with interactive section. */
+
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 body {
-  min-height: 100vh;
-  background: black;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  color: #e0e0e0;
-  padding: 2rem;
+    min-height: 100vh;
+    background: #fff;
+    font-family: system-ui, -apple-system, sans-serif;
+    color: #1c1917;
+    padding: 2rem 1rem;
+}
+
+a, button, summary, select, label[for] {
+    cursor: pointer;
+}
+
+a:focus-visible, button:focus-visible, input:focus-visible {
+    outline: 2px solid #4f46e5;
+    outline-offset: 2px;
 }
 
 .back-link {
-  position: fixed;
-  top: 1.5rem;
-  left: 1.5rem;
-  color: #fff;
-  text-decoration: none;
-  font-size: 1rem;
-  font-weight: 600;
-  background: rgba(255, 255, 255, 0.1);
-  padding: 0.5rem 1.2rem;
-  border-radius: 10px;
-  transition: background 0.2s;
-  z-index: 10;
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+    color: #1c1917;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 600;
+    background: #f5f5f4;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    border: 1px solid #d6d3d1;
+    z-index: 10;
 }
 
 .back-link:hover {
-  background: rgba(255, 255, 255, 0.2);
+    background: #e7e5e4;
+}
+
+.back-link:active {
+    background: #d6d3d1;
 }
 
 .container {
-  max-width: 900px;
-  margin: 0 auto;
-  padding-top: 3rem;
+    max-width: 800px;
+    margin: 0 auto;
+    padding-top: 2.5rem;
 }
 
 h1 {
-  text-align: center;
-  font-size: 2rem;
-  margin-bottom: 1rem;
-  color: #fff;
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    color: #1c1917;
 }
 
 .description {
-  text-align: center;
-  color: #a9a9c8;
-  margin-bottom: 2rem;
-  line-height: 1.6;
+    color: #57534e;
+    margin-bottom: 2rem;
+    line-height: 1.6;
 }
 
+/* Code block */
 .code-block {
-  background: #1e1e2e;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 14px;
-  padding: 1.5rem;
-  overflow-x: auto;
-  margin-bottom: 2rem;
-  position: relative;
+    background: #1e1b2e;
+    border: 1px solid #d6d3d1;
+    border-radius: 6px;
+    padding: 1.25rem;
+    overflow-x: auto;
+    margin-bottom: 2rem;
+    position: relative;
 }
 
 .code-block .lang-label {
-  position: absolute;
-  top: 0.75rem;
-  right: 1rem;
-  font-size: 0.75rem;
-  color: #888;
-  text-transform: uppercase;
-  letter-spacing: 1px;
+    position: absolute;
+    top: 0.6rem;
+    right: 0.75rem;
+    font-size: 0.7rem;
+    color: #a8a29e;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 pre {
-  font-family: "Fira Code", "Consolas", "Courier New", monospace;
-  font-size: 0.88rem;
-  line-height: 1.65;
-  white-space: pre;
-  color: #d4d4d4;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.85rem;
+    line-height: 1.6;
+    white-space: pre;
+    color: #d4d4d4;
 }
 
-.keyword {
-  color: #c678dd;
-}
-.function {
-  color: #61afef;
-}
-.string {
-  color: #98c379;
-}
-.comment {
-  color: #5c6370;
-  font-style: italic;
-}
-.const {
-  color: #e5c07b;
-}
-.number {
-  color: #d19a66;
-}
-.type {
-  color: #e06c75;
-}
+.keyword { color: #c678dd; }
+.function { color: #61afef; }
+.string  { color: #98c379; }
+.comment { color: #7c7c8a; font-style: italic; }
+.const   { color: #e5c07b; }
+.number  { color: #d19a66; }
+.type    { color: #e06c75; }
 
 h2 {
-  font-size: 1.3rem;
-  margin-bottom: 1rem;
-  color: #fff;
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    color: #1c1917;
 }
 
-/* Интерактивная проверка */
+/* Interactive section */
 .interactive {
-  background: #1e1e2e;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 14px;
-  padding: 1.5rem;
-  margin-bottom: 2rem;
+    background: #f5f5f4;
+    border: 1px solid #e7e5e4;
+    border-radius: 6px;
+    padding: 1.25rem;
+    margin-bottom: 2rem;
 }
 
 .interactive label {
-  display: block;
-  margin-bottom: 0.5rem;
-  color: #a9a9c8;
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #44403c;
+    font-weight: 500;
 }
 
 .input-row {
-  display: flex;
-  gap: 1rem;
-  align-items: center;
-  flex-wrap: wrap;
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+    flex-wrap: wrap;
 }
 
 .interactive input {
-  flex: 1;
-  min-width: 200px;
-  padding: 0.7rem 1rem;
-  font-size: 1.2rem;
-  font-family: "Fira Code", "Consolas", monospace;
-  background: #12121e;
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 10px;
-  color: #fff;
-  outline: none;
-  letter-spacing: 3px;
+    flex: 1;
+    min-width: 200px;
+    padding: 0.6rem 0.75rem;
+    font-size: 1.1rem;
+    font-family: 'Courier New', Courier, monospace;
+    background: #fff;
+    border: 1px solid #d6d3d1;
+    border-radius: 6px;
+    color: #1c1917;
+    letter-spacing: 2px;
 }
 
 .interactive input:focus {
-  border-color: #3b82f6;
+    border-color: #4f46e5;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.25);
 }
 
 .interactive button {
-  padding: 0.7rem 2rem;
-  font-size: 1rem;
-  font-weight: 600;
-  color: #fff;
-  background: linear-gradient(135deg, #10b981, #06b6d4);
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: opacity 0.2s;
+    padding: 0.6rem 1.5rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #fff;
+    background: #4f46e5;
+    border: none;
+    border-radius: 6px;
+    min-height: 44px;
 }
 
-.interactive button:hover {
-  opacity: 0.85;
-}
+.interactive button:hover { background: #4338ca; }
+.interactive button:active { background: #3730a3; }
 
 .result {
-  margin-top: 1rem;
-  font-size: 1.1rem;
-  font-weight: 600;
-  min-height: 1.5rem;
+    margin-top: 0.75rem;
+    font-size: 1rem;
+    font-weight: 600;
+    min-height: 1.5rem;
 }
 
-.result.valid {
-  color: #98c379;
-}
-.result.invalid {
-  color: #e06c75;
-}
+.result.valid   { color: #16a34a; }
+.result.invalid { color: #dc2626; }
 
-/* Визуализация стека */
+/* Stack visualisation */
 .stack-visual {
-  margin-top: 1rem;
-  display: flex;
-  gap: 0.4rem;
-  flex-wrap: wrap;
-  align-items: flex-end;
-  min-height: 2.5rem;
+    margin-top: 0.75rem;
+    display: flex;
+    gap: 0.35rem;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    min-height: 2.5rem;
 }
 
 .stack-item {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 2.2rem;
-  height: 2.2rem;
-  background: rgba(59, 130, 246, 0.2);
-  border: 1px solid rgba(59, 130, 246, 0.5);
-  border-radius: 8px;
-  font-family: "Fira Code", monospace;
-  font-size: 1.1rem;
-  color: #61afef;
-  animation: pop-in 0.15s ease-out;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.2rem;
+    height: 2.2rem;
+    background: #ede9fe;
+    border: 1px solid #c4b5fd;
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+    font-size: 1.1rem;
+    color: #4f46e5;
 }
 
-@keyframes pop-in {
-  from {
-    transform: scale(0);
-    opacity: 0;
-  }
-  to {
-    transform: scale(1);
-    opacity: 1;
-  }
-}
-
-/* Таблица тестов */
+/* Tests */
 .test-section {
-  background: #1e1e2e;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 14px;
-  padding: 1.5rem;
-  margin-bottom: 1rem;
+    background: #f5f5f4;
+    border: 1px solid #e7e5e4;
+    border-radius: 6px;
+    padding: 1.25rem;
+    margin-bottom: 1rem;
 }
 
 #test-output {
-  font-family: "Fira Code", "Consolas", monospace;
-  font-size: 0.88rem;
-  line-height: 1.6;
-  white-space: pre-wrap;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.85rem;
+    line-height: 1.6;
+    white-space: pre-wrap;
+    color: #1c1917;
 }
 
-.pass {
-  color: #98c379;
-}
-.fail {
-  color: #e06c75;
-}
+.pass { color: #16a34a; }
+.fail { color: #dc2626; }
 
 .run-tests-btn {
-  display: block;
-  margin: 1.5rem auto;
-  padding: 0.8rem 2.5rem;
-  font-size: 1rem;
-  font-weight: 600;
-  color: #fff;
-  background: linear-gradient(135deg, #10b981, #06b6d4);
-  border: none;
-  border-radius: 12px;
-  cursor: pointer;
-  transition: opacity 0.2s;
+    display: block;
+    margin: 1.25rem auto;
+    padding: 0.65rem 2rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #fff;
+    background: #4f46e5;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    min-height: 44px;
 }
 
-.run-tests-btn:hover {
-  opacity: 0.85;
-}
+.run-tests-btn:hover { background: #4338ca; }
+.run-tests-btn:active { background: #3730a3; }
 
+/* Complexity info box */
 .complexity {
-  margin-top: 1rem;
-  padding: 1rem;
-  background: rgba(16, 185, 129, 0.08);
-  border: 1px solid rgba(16, 185, 129, 0.2);
-  border-radius: 10px;
-  font-size: 0.9rem;
-  line-height: 1.6;
-  color: #a9a9c8;
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+    padding: 1rem;
+    background: #f5f5f4;
+    border: 1px solid #e7e5e4;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: #44403c;
 }
 
 .complexity strong {
-  color: #10b981;
+    color: #1c1917;
+}
+
+@media (max-width: 640px) {
+    .container {
+        padding-top: 3.5rem;
+    }
+
+    .input-row {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .interactive input {
+        min-width: 0;
+    }
 }

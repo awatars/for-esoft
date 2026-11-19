@@ -1,10 +1,11 @@
-//Реализация
+// isValidBrackets: проверка правильности скобочной последовательности
 function isValidBrackets(s) {
-    const matching = { ')': '(', ']': '[', '}': '{' };
-    const opening = new Set(['(', '[', '{']);
-    const stack = [];
+    var matching = { ')': '(', ']': '[', '}': '{' };
+    var opening = new Set(['(', '[', '{']);
+    var stack = [];
 
-    for (const char of s) {
+    for (var i = 0; i < s.length; i++) {
+        var char = s[i];
         if (opening.has(char)) {
             stack.push(char);
         } else if (char in matching) {
@@ -18,26 +19,27 @@ function isValidBrackets(s) {
     return stack.length === 0;
 }
 
-//Интерактивная проверка
-document.getElementById('check-btn').addEventListener('click', () => {
-    const input = document.getElementById('bracket-input').value;
-    const resultEl = document.getElementById('check-result');
-    const stackEl = document.getElementById('stack-visual');
+// Интерактивная проверка
+document.getElementById('check-btn').addEventListener('click', function () {
+    var input = document.getElementById('bracket-input').value;
+    var resultEl = document.getElementById('check-result');
+    var stackEl = document.getElementById('stack-visual');
 
-    const valid = isValidBrackets(input);
+    var valid = isValidBrackets(input);
 
     resultEl.textContent = valid
-        ? `true — последовательность правильная`
-        : `false — последовательность неправильная`;
+        ? 'true, последовательность правильная'
+        : 'false, последовательность неправильная';
     resultEl.className = 'result ' + (valid ? 'valid' : 'invalid');
 
-    const matching = { ')': '(', ']': '[', '}': '{' };
-    const opening = new Set(['(', '[', '{']);
-    const stack = [];
-    let errorIndex = -1;
+    // Визуализация стека
+    var matching = { ')': '(', ']': '[', '}': '{' };
+    var opening = new Set(['(', '[', '{']);
+    var stack = [];
+    var errorIndex = -1;
 
-    for (let i = 0; i < input.length; i++) {
-        const char = input[i];
+    for (var i = 0; i < input.length; i++) {
+        var char = input[i];
         if (opening.has(char)) {
             stack.push(char);
         } else if (char in matching) {
@@ -50,27 +52,31 @@ document.getElementById('check-btn').addEventListener('click', () => {
     }
 
     if (stack.length === 0 && errorIndex === -1) {
-        stackEl.innerHTML = '<span style="color:#5c6370;font-style:italic;">Стек пуст ✓</span>';
+        stackEl.innerHTML = '<span style="color:#78716c;font-style:italic;">Стек пуст</span>';
     } else {
-        stackEl.innerHTML = stack.map(c => `<div class="stack-item">${c}</div>`).join('');
+        stackEl.innerHTML = stack.map(function (c) {
+            return '<div class="stack-item">' + c + '</div>';
+        }).join('');
     }
 });
 
 // Enter тоже запускает проверку
-document.getElementById('bracket-input').addEventListener('keydown', (e) => {
-    if (e.key === 'Enter') document.getElementById('check-btn').click();
+document.getElementById('bracket-input').addEventListener('keydown', function (e) {
+    if (e.key === 'Enter') {
+        document.getElementById('check-btn').click();
+    }
 });
 
-//Тесты 
-document.getElementById('run-tests').addEventListener('click', () => {
-    const output = document.getElementById('test-output');
-    const results = [];
+// Тесты
+document.getElementById('run-tests').addEventListener('click', function () {
+    var output = document.getElementById('test-output');
+    var results = [];
 
     function assert(actual, expected, name) {
         if (actual === expected) {
-            results.push(`<span class="pass">   PASS</span>  ${name}  →  ${actual}`);
+            results.push('<span class="pass">  PASS</span>  ' + name + '  :  ' + actual);
         } else {
-            results.push(`<span class="fail">   FAIL</span>  ${name}  →  ожидалось ${expected}, получено ${actual}`);
+            results.push('<span class="fail">  FAIL</span>  ' + name + '  :  ожидалось ' + expected + ', получено ' + actual);
         }
     }
 
@@ -88,11 +94,11 @@ document.getElementById('run-tests').addEventListener('click', () => {
     assert(isValidBrackets('({[}])'), false, 'Неправильный порядок "({[}])"');
     assert(isValidBrackets('((({{{[[[]]]}}})))'), true, '18 вложенных скобок');
 
-    const big = '('.repeat(5000) + ')'.repeat(5000);
-    const t0 = performance.now();
-    const bigResult = isValidBrackets(big);
-    const t1 = performance.now();
-    assert(bigResult, true, `10 000 символов (${(t1 - t0).toFixed(2)} мс)`);
+    var big = '('.repeat(5000) + ')'.repeat(5000);
+    var t0 = performance.now();
+    var bigResult = isValidBrackets(big);
+    var t1 = performance.now();
+    assert(bigResult, true, '10 000 символов (' + (t1 - t0).toFixed(2) + ' мс)');
 
-    output.innerHTML = `<strong>Результаты тестирования:</strong>\n\n${results.join('\n')}`;
+    output.innerHTML = '<strong>Результаты тестирования:</strong>\n\n' + results.join('\n');
 });
